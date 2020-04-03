@@ -1,0 +1,215 @@
+extends layout
+
+mixin realtime()
+  .alert.alert-danger
+    a(href="https://github.com/hisashin/NinjaPCR/wiki/NinjaPCR's-fight-with-COVID-19" _blank)
+      | #{$i18n.special.realtime}
+
+mixin navbar(dir)
+  header
+    nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+      - var isConsole = /\/console\//.test(dir)
+      - var isAssy = /\/assy\//.test(dir)
+      - var isOp = /\/op\//.test(dir)
+      - var isMaker = /\/maker\//.test(dir)
+      - var isReq = /\/req\//.test(dir)
+      - var isUpdate = /\/update\//.test(dir)
+      - var isAbout = /\/about\//.test(dir)
+      - var isStore = /\/store\//.test(dir)
+      - var noCurrent = /\/nocurrent\//.test(dir)
+      a.navbar-brand(href="/") NinjaPCR
+      button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarCollapse", aria-controls="navbarCollapse", aria-expanded="false", aria-label="Toggle navigation")
+        span.navbar-toggler-icon
+      .collapse.navbar-collapse(id="navbarCollapse")
+        ul.navbar-nav
+          li.nav-item(class= isConsole ? "active" : "")
+            a.nav-link(href="/"+$localeName+"/console/index.html") #{$i18n.console.shortlabel}
+            if isConsole && !noCurrent
+              span.sr-only (current)
+          li.nav-item(class= isAssy ? "active" : "")
+            a.nav-link(href="/"+$localeName+"/assy/index.html") #{$i18n.assy.shortlabel}
+            if isAssy && !noCurrent
+              span.sr-only (current)
+          li.nav-item(class= isOp ? "active" : "")
+            a.nav-link(href="/"+$localeName+"/op/index.html") #{$i18n.op.index.shortlabel}
+            if isOp && !noCurrent
+              span.sr-only (current)
+          li.nav-item(class= isMaker ? "active" : "")
+            a.nav-link(href="/"+$localeName+"/maker/index.html") #{$i18n.maker.shortlabel}
+            if isMaker && !noCurrent
+              span.sr-only (current)
+          li.nav-item(class= isReq ? "active" : "")
+            a.nav-link(href="/"+$localeName+"/req/index.html") #{$i18n.req.shortlabel}
+            if isReq && !noCurrent
+              span.sr-only (current)
+          li.nav-item(class= isUpdate ? "active" : "")
+            a.nav-link(href="/"+$localeName+"/update/index.html") #{$i18n.update.shortlabel}
+            if isUpdate && !noCurrent
+              span.sr-only (current)
+          li.nav-item(class= isAbout ? "active" : "")
+            a.nav-link(href="/"+$localeName+"/about/index.html") #{$i18n.about.shortlabel}
+            if isAbout && !noCurrent
+              span.sr-only (current)
+
+        ul.navbar-nav.ml-auto.align-items-md-center.align-items-lg-center.align-items-xl-center
+          li.nav-item.active
+            a.nav-link(href="https://a360.co/2NqlSCs", target="_blank")
+              | 3D
+          li.nav-item.active
+            a.nav-link(href="https://github.com/hisashin/NinjaPCR", target="_blank")
+              span(data-feather="github")
+          li.nav-item.active
+            a.nav-link(href="/"+$localeName+"/contact/index.html", target="_blank")
+              span(data-feather="mail")
+          li.nav-item
+            span.nav-link
+              if $localeName == 'en'
+                span EN
+              else
+                a(style="color:#fff;", href="#", onClick="langRedirect('en')", class= isEn ? "active" : "") EN
+              | &nbsp;|&nbsp;
+              if $localeName == 'ja'
+                span JA
+              else
+                a(style="color:#fff;", href="#", onClick="langRedirect('ja')", class= isJa ? "active" : "") JA
+          li.nav-item
+            a.nav-link(href="/"+$localeName+"/store/index.html")
+              button.btn.btn-outline-warning(type="button" style="padding: 0px 5px 0px 5px;")
+                | #{$i18n.store.label}
+
+mixin sidebar(dir)
+  - var isConsole = /\/console\//.test(dir)
+  - var isOp = /\/op\//.test(dir)
+  - var isMaker = /\/maker\//.test(dir)
+  - var isReq = /\/req\//.test(dir)
+  - var isUpdate = /\/update\//.test(dir)
+  - var isAbout = /\/about\//.test(dir)
+  - var isAssy = /\/assy\//.test(dir) && !isMaker
+  .sidebar-sticky
+    ul.nav.flex-column
+      li.nav-item
+        a.nav-link(href="/"+$localeName+"/console/index.html", class= isConsole ? "active" : "")
+          span(data-feather="droplet")
+          | #{$i18n.console.label}
+          if isConsole
+            span.sr-only (current)
+      li.nav-item
+        a.nav-link(href="/"+$localeName+"/assy/index.html", class= isAssy ? "active" : "")
+          span(data-feather="life-buoy")
+          | #{$i18n.assy.label}
+          if isAssy
+            span.sr-only (current)
+        if isAssy
+          - var isAssyUnbox = /\/assy\/unbox\//.test(dir)
+          - var isAssyLid = /\/assy\/lid\//.test(dir)
+          - var isAssyWell = /\/assy\/well\//.test(dir)
+          - var isAssyBody = /\/assy\/body\//.test(dir)
+          - var isAssySetup = /\/assy\/setup\//.test(dir)
+          - var isAssyIndex = (!isAssyUnbox && !isAssyLid && !isAssyWell & !isAssyBody && !isAssySetup)
+          .list-group.list-group-root.well
+            a.list-group-item(href="/"+$localeName+"/assy/index.html", class= isAssyIndex ? "active" : "") #{$i18n.assy.index.label}
+            if false && isAssyIndex
+              .list-group#sidebar-assy-index
+                each item,index in $i18n.assy.index.items
+                  a.list-group-item.list-group-item-action(href="#item-assy-index-"+index) #{item.title}
+            a.list-group-item(href="/"+$localeName+"/assy/unbox/index.html", class= isAssyUnbox ? "active" : "") #{$i18n.assy.unbox.label}
+            if isAssyUnbox
+              .list-group#sidebar-assy-unbox
+                each item,index in $i18n.assy.unbox.items
+                  a.list-group-item.list-group-item-action(href="#item-assy-unbox-"+index) #{item.title}
+            a.list-group-item(href="/"+$localeName+"/assy/lid/index.html", class= isAssyLid ? "active" : "") #{$i18n.assy.lid.label}
+            if isAssyLid
+              .list-group#sidebar-assy-lid
+                each item,index in $i18n.assy.lid.items
+                  a.list-group-item.list-group-item-action(href="#item-assy-lid-"+index) #{item.title}
+            a.list-group-item(href="/"+$localeName+"/assy/well/index.html", class= isAssyWell ? "active" : "") #{$i18n.assy.well.label}
+            if isAssyWell
+              .list-group#sidebar-assy-well
+                each item,index in $i18n.assy.well.items
+                  a.list-group-item.list-group-item-action(href="#item-assy-well-"+index) #{item.title}
+            a.list-group-item(href="/"+$localeName+"/assy/body/index.html", class= isAssyBody ? "active" : "") #{$i18n.assy.body.label}
+            if isAssyBody
+              .list-group#sidebar-assy-body
+                each item,index in $i18n.assy.body.items
+                  a.list-group-item.list-group-item-action(href="#item-assy-body-"+index) #{item.title}
+            a.list-group-item(href="/"+$localeName+"/assy/setup/index.html", class= isAssySetup ? "active" : "") #{$i18n.assy.setup.label}
+            if isAssySetup
+              .list-group#sidebar-assy-setup
+                each item,index in $i18n.assy.setup.items
+                  a.list-group-item.list-group-item-action(href="#item-assy-setup-"+index) #{item.title}
+      li.nav-item
+        a.nav-link(href="/"+$localeName+"/op/index.html", class= isOp ? "active" : "")
+          span(data-feather="life-buoy")
+          | #{$i18n.op.index.label}
+          if isOp
+            span.sr-only (current)
+        if isOp
+          .list-group#sidebar-op-index
+            each item,index in $i18n.op.index.items
+              a.list-group-item.list-group-item-action(href="#item-op-index-"+index) #{item.title}
+      li.nav-item
+        a.nav-link(href="/"+$localeName+"/maker/index.html", class= isMaker ? "active" : "")
+          span(data-feather="user")
+          | #{$i18n.maker.label}
+          if isMaker
+            span.sr-only (current)
+        if isMaker
+          - var isMakerList = /\/maker\/list\//.test(dir)
+          - var isMakerWood = /\/maker\/wood\//.test(dir)
+          - var isMakerPcb = /\/maker\/pcb\//.test(dir)
+          - var isMakerWell = /\/maker\/well\//.test(dir)
+          - var isMakerHeater = /\/maker\/heater\//.test(dir)
+          - var isMakerPlate = /\/maker\/plate\//.test(dir)
+          - var isMakerPc = /\/maker\/pc\//.test(dir)
+          - var isMakerScrew = /\/maker\/screw\//.test(dir)
+          - var isMakerMisc = /\/maker\/misc\//.test(dir)
+          - var isMakerAssy = /\/maker\/assy\//.test(dir)
+          - var isMakerFirmware = /\/maker\/firmware\//.test(dir)
+          - var isMakerIndex = (!isMakerList && !isMakerWood && !isMakerPcb && !isMakerWell && !isMakerHeater && !isMakerPlate && !isMakerPc && !isMakerScrew && !isMakerMisc && !isMakerAssy && !isMakerFirmware)
+          .list-group.list-group-root.well
+            a.list-group-item(href="/"+$localeName+"/maker/index.html", class= isMakerIndex ? "active" : "") #{$i18n.maker.index.label}
+            a.list-group-item(href="/"+$localeName+"/maker/list/index.html", class= isMakerList ? "active" : "") #{$i18n.maker.list.label}
+            a.list-group-item(href="/"+$localeName+"/maker/wood/index.html", class= isMakerWood ? "active" : "") #{$i18n.maker.wood.label}
+            a.list-group-item(href="/"+$localeName+"/maker/pcb/index.html", class= isMakerPcb ? "active" : "") #{$i18n.maker.pcb.label}
+            a.list-group-item(href="/"+$localeName+"/maker/well/index.html", class= isMakerWell ? "active" : "") #{$i18n.maker.well.label}
+            a.list-group-item(href="/"+$localeName+"/maker/heater/index.html", class= isMakerHeater ? "active" : "") #{$i18n.maker.heater.label}
+            a.list-group-item(href="/"+$localeName+"/maker/plate/index.html", class= isMakerPlate ? "active" : "") #{$i18n.maker.plate.label}
+            a.list-group-item(href="/"+$localeName+"/maker/pc/index.html", class= isMakerPc ? "active" : "") #{$i18n.maker.pc.label}
+            a.list-group-item(href="/"+$localeName+"/maker/screw/index.html", class= isMakerScrew ? "active" : "") #{$i18n.maker.screw.label}
+            a.list-group-item(href="/"+$localeName+"/maker/misc/index.html", class= isMakerMisc ? "active" : "") #{$i18n.maker.misc.label}
+            a.list-group-item(href="/"+$localeName+"/maker/assy/index.html", class= isMakerAssy ? "active" : "") #{$i18n.maker.assy.label}
+            a.list-group-item(href="/"+$localeName+"/maker/firmware/index.html", class= isMakerFirmware ? "active" : "") #{$i18n.maker.firmware.label}
+      li.nav-item
+        a.nav-link(href="/"+$localeName+"/req/index.html", class= isReq ? "active" : "")
+          span(data-feather="smartphone")
+          | #{$i18n.req.label}
+          if isReq
+            span.sr-only (current)
+      li.nav-item
+        a.nav-link(href="/"+$localeName+"/update/index.html", class= isUpdate ? "active" : "")
+          span(data-feather="clock")
+          | #{$i18n.update.label}
+          if isUpdate
+            span.sr-only (current)
+      li.nav-item
+        a.nav-link(href="/"+$localeName+"/about/index.html", class= isAbout ? "active" : "")
+          span(data-feather="users")
+          | #{$i18n.about.label}
+          if isAbout
+            span.sr-only (current)
+
+block append head
+  link(rel='stylesheet', href='/css/navbar-top-fixed.css')
+  link(rel='stylesheet', href='/css/dashboard.css')
+
+block append content
+  block navbar
+  
+  .container-fluid
+    .row
+      nav.col-md-2.d-none.d-md-block.bg-light.sidebar#sidebar
+        block sidebar
+
+      main.col-md-10.ml-sm-auto.col-lg-10.px-4(role="main")
+        +realtime
+        block main

@@ -1,0 +1,11 @@
+{   
+    "metas" : {
+        "siteName" : "Ninja qPCR",
+        "url" : "https://ninjaqpcr.tori.st",
+        "title" : "Ninja qPCR",
+        "keywords" : "Ninja qPCR,PCR,Real Time PCR,qPCR,Thermal cycler,DNA amplifier",
+        "description" : "Ninja qPCR is an opensource thermalcycler",
+        "image" : "https://ninjaqpcr.tori.st/images/render/520x577.png",
+        "author" : "Toriningen Inc.(Shingo Hisakawa, Mariko Hisakawa)"
+    },              
+}

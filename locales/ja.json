@@ -1,0 +1,11 @@
+{
+    "metas" : {
+        "siteName" : "Ninja qPCR",
+        "url" : "https://ninjaqpcr.tori.st",
+        "title" : "Ninja qPCR",
+        "keywords" : "Ninja qPCR,PCR,Real Time PCR,qPCR,サーマルサイクラー,DNA増幅器",
+        "description" : "Ninja qPCRはオープンソースのリアルタイムPCRです",
+        "image" : "https://ninjaqpcr.tori.st/images/render/520x577.png",
+        "author" : "株式会社鳥人間(Shingo Hisakawa, Mariko Hisakawa)"
+    },
+}
