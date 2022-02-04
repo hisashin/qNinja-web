@@ -30,7 +30,8 @@ jobs:
     - name: Build
       run: |
         npm install
-        gulp
+        ls -al
+        gulp ./gulpfile.js
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
