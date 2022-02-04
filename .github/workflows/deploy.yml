@@ -5,11 +5,10 @@ on:
     branches: [ production ]
 
 env:
-  AWS_ROLE_ARN: a${{ secrets.AWS_ROLE_ARN }}
+  AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
   SLACK_USERNAME: Ninja
   SLACK_CHANNEL: pcr
-  //SLACK_ICON: https://example.com/image/icon_bot.png
 
 permissions:
   id-token: write
