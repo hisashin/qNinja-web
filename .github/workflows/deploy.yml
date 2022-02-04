@@ -5,7 +5,11 @@ on:
     branches: [ production ]
 
 env:
-  AWS_ROLE_ARN: arn:aws:iam::314407188943:role/github-to-s3
+  AWS_ROLE_ARN: a${{ secrets.AWS_ROLE_ARN }}
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  SLACK_USERNAME: Ninja
+  SLACK_CHANNEL: pcr
+  //SLACK_ICON: https://example.com/image/icon_bot.png
 
 permissions:
   id-token: write
@@ -41,3 +45,17 @@ jobs:
     - name: Copy files to the test website with the AWS CLI
       run: |
         aws s3 sync production/ s3://qpcr-ninja/production/
+
+    - name: Slack Notification on Success
+      if: ${{ success() }}
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_TITLE: Ninja-qPCR-web Deploy Success
+        SLACK_COLOR: good
+
+    - name: Slack Notification on Failure
+      if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_TITLE: Ninja-qPCR-web Deploy Failure
+        SLACK_COLOR: danger
