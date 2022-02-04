@@ -11,14 +11,14 @@ const typescript = require('gulp-typescript');
 const sass = require('gulp-sass');
 const exec = require('gulp-exec');
 
-gulp.task('pug', () => {
+const doPug = () => {
   return gulp.src(['./pug/**/*.pug', './pug/**/*.jade', '!**/layout*', '!**/include/*', '!**/includes/*'])
   .pipe(pug({
     pretty: true
   }))
   .pipe(gulp.dest('./production/'));
-});
-gulp.task('pugI18n', () => {
+};
+const doPugI18n = () => {
   var options = {
     i18n: {
       //verbose: true,
@@ -30,24 +30,22 @@ gulp.task('pugI18n', () => {
   return gulp.src(['./pugI18n/**/*.pug', './pugI18n/**/*.jade', '!**/layout*', '!**/include/*', '!**/includes/*'])
   .pipe(pugI18n(options))
   .pipe(gulp.dest(options.i18n.dest));
-});
-gulp.task('default', gulp.series('pug', 'pugI18n'));
+};
 
-gulp.task('sass', () => {
+const doSass = () => {
   return gulp.src('./scss/**/*.scss')
     .pipe(sass())
     .pipe(gulp.dest('./production/'));
-});
+};
 
-gulp.task('ts', () => {
+const doTs = () => {
   return gulp.src([ './ts/**/*.ts' ])
          .pipe(typescript({ target: 'ES5', module: 'commonjs' }))
          .js
          .pipe(gulp.dest('./production/'));
-});
+};
 
-
-gulp.task('shell', () => {
+const doShell = () => {
   return gulp.src('.')
   .pipe(exec("./build_local_console.sh",(err, stdout, stderr) => {
     if (stdout) {
@@ -57,11 +55,12 @@ gulp.task('shell', () => {
       console.log(stderr);
     }
   }));
-});
+};
 /*
-gulp.task('babel', function() {
-  gulp.src('./production/console/js-ES6/*.js')
+const doBabel = () => {
+  return gulp.src('./production/console/js-ES6/*.js')
     .pipe(babel())
     .pipe(gulp.dest('./production/console/js'))
-});
+};
 */
+exports.default = gulp.series(doPug, doPugI18n);
