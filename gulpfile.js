@@ -12,42 +12,42 @@ const sass = require('gulp-sass');
 const exec = require('gulp-exec');
 
 const doPug = () => {
-  return gulp.src(['./pug/**/*.pug', './pug/**/*.jade', '!**/layout*', '!**/include/*', '!**/includes/*'])
+  return gulp.src(['${__dirname}/pug/**/*.pug', '${__dirname}/pug/**/*.jade', '!**/layout*', '!**/include/*', '!**/includes/*'])
   .pipe(pug({
     pretty: true
   }))
-  .pipe(gulp.dest('./production/'));
+  .pipe(gulp.dest('${__dirname}/production/'));
 };
 const doPugI18n = () => {
   var options = {
     i18n: {
       //verbose: true,
-      dest: './production/',
-      locales: './locales/*.*'
+      dest: '${__dirname}/production/',
+      locales: '${__dirname}/locales/*.*'
     },
     pretty: true
   };
-  return gulp.src(['./pugI18n/**/*.pug', './pugI18n/**/*.jade', '!**/layout*', '!**/include/*', '!**/includes/*'])
+  return gulp.src(['${__dirname}/pugI18n/**/*.pug', '${__dirname}/pugI18n/**/*.jade', '!**/layout*', '!**/include/*', '!**/includes/*'])
   .pipe(pugI18n(options))
   .pipe(gulp.dest(options.i18n.dest));
 };
 
 const doSass = () => {
-  return gulp.src('./scss/**/*.scss')
+  return gulp.src('${__dirname}/scss/**/*.scss')
     .pipe(sass())
-    .pipe(gulp.dest('./production/'));
+    .pipe(gulp.dest('${__dirname}/production/'));
 };
 
 const doTs = () => {
-  return gulp.src([ './ts/**/*.ts' ])
+  return gulp.src([ '${__dirname}/ts/**/*.ts' ])
          .pipe(typescript({ target: 'ES5', module: 'commonjs' }))
          .js
-         .pipe(gulp.dest('./production/'));
+         .pipe(gulp.dest('${__dirname}/production/'));
 };
 
 const doShell = () => {
   return gulp.src('.')
-  .pipe(exec("./build_local_console.sh",(err, stdout, stderr) => {
+  .pipe(exec("${__dirname}/build_local_console.sh",(err, stdout, stderr) => {
     if (stdout) {
       console.log(stdout);
     }
@@ -58,9 +58,9 @@ const doShell = () => {
 };
 /*
 const doBabel = () => {
-  return gulp.src('./production/console/js-ES6/*.js')
+  return gulp.src('${__dirname}/production/console/js-ES6/*.js')
     .pipe(babel())
-    .pipe(gulp.dest('./production/console/js'))
+    .pipe(gulp.dest('${__dirname}/production/console/js'))
 };
 */
 exports.default = gulp.series(doPug, doPugI18n);
