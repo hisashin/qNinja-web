@@ -14,6 +14,7 @@ const exec = require('gulp-exec');
 const doPug = () => {
   return gulp.src(['${__dirname}/pug/**/*.pug', '${__dirname}/pug/**/*.jade', '!**/layout*', '!**/include/*', '!**/includes/*'])
   .pipe(pug({
+    verbose: true
     pretty: true
   }))
   .pipe(gulp.dest('${__dirname}/production/'));
@@ -21,7 +22,7 @@ const doPug = () => {
 const doPugI18n = () => {
   var options = {
     i18n: {
-      //verbose: true,
+      verbose: true,
       dest: '${__dirname}/production/',
       locales: '${__dirname}/locales/*.*'
     },
