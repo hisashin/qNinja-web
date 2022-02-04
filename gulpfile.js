@@ -64,4 +64,4 @@ const doBabel = () => {
     .pipe(gulp.dest('${__dirname}/production/console/js'))
 };
 */
-exports.default = gulp.series(doPug, doPugI18n);
+exports.default = gulp.parallel(doPug, doPugI18n);
