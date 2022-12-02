@@ -5,7 +5,9 @@ on:
     branches: [ production ]
 
 env:
+  SERVICE_NAME: Ninja-qPCR-web
   AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+  CF_DISTRIBUTION_ID: ${{ secrets.CF_DISTRIBUTION_ID }}
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
   SLACK_USERNAME: Ninja
   SLACK_CHANNEL: pcr
@@ -44,17 +46,18 @@ jobs:
     - name: Copy files to the test website with the AWS CLI
       run: |
         aws s3 sync production/ s3://qpcr-ninja/production/
+        aws cloudfront create-invalidation --distribution-id ${{ env.CF_DISTRIBUTION_ID }} --paths "/update/*" "/secure/*"
 
     - name: Slack Notification on Success
       if: ${{ success() }}
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_TITLE: Ninja-qPCR-web Deploy Success
+        SLACK_TITLE: ${{ env.SERVICE_NAME }} Deploy Success
         SLACK_COLOR: good
 
     - name: Slack Notification on Failure
       if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_TITLE: Ninja-qPCR-web Deploy Failure
+        SLACK_TITLE: ${{ env.SERVICE_NAME }} Deploy Failure
         SLACK_COLOR: danger
